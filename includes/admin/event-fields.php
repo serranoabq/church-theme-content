@@ -161,7 +161,7 @@ function ctc_add_meta_box_event_date() {
 			'_ctc_event_recurrence_period' => array(
 				'name'				=> __( 'Recurrence Period', 'church-theme-content' ),
 				'after_name'		=> '',
-				'desc'				=> _x( "Period of recurrence. It works with the Recurrence field to allow every N type recurrence. For example, choosing 'weekly' and seting this field to '2' makes the recurrence biweekly.", 'event meta box', 'church-theme-content' ),
+				'desc'				=> _x( "Period of recurrence. It works with the Recurrence field to allow every N type recurrence. For example, choosing 'weekly' and setting this field to '2' makes the recurrence biweekly.", 'event meta box', 'church-theme-content' ),
 				'type'				=> 'number', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
 				'checkbox_label'	=> '', //show text after checkbox
 				'options'			=> array(), // array of keys/values for radio or select
