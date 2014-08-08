@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2013, churchthemes.com
  * @link       https://github.com/churchthemes/church-theme-content
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @since      0.9
+ * @since      0.9.1
  */
 
 // No direct access
@@ -60,7 +60,8 @@ function ctc_update_recurring_event_dates() {
 		   ),
 			array(
 				'key' => '_ctc_event_recurrence',
-				'value' => array( 'weekly', 'monthly', 'yearly' ),
+				'value' => array( 'daily', 'weekly', 'monthly', 'yearly' ),
+				//'value' => array( 'weekly', 'monthly', 'yearly' ),
 		 		'compare' => 'IN',
 		   )
 		)
@@ -73,6 +74,7 @@ function ctc_update_recurring_event_dates() {
 
 		 	// Get recurrence
 		 	$recurrence = get_post_meta( $post->ID, '_ctc_event_recurrence', true );
+			$recurrence_period = get_post_meta( $post->ID, '_ctc_event_recurrence_period', true );
 			$recurrence_end_date = get_post_meta( $post->ID, '_ctc_event_recurrence_end_date', true );
 
 			// Get start and end dates
@@ -83,7 +85,8 @@ function ctc_update_recurring_event_dates() {
 			$time_difference = strtotime( $end_date ) - strtotime( $start_date );
 
 			// Calculate incremented dates
-			$new_start_date = ctc_increment_future_date( $start_date, $recurrence ); // get closest incremented date in future
+			$new_start_date = ctc_increment_future_date( $start_date, $recurrence, $recurrence_period ); // get closest incremented date in future
+			//$new_start_date = ctc_increment_future_date( $start_date, $recurrence ); // get closest incremented date in future
 			$new_end_date = date( 'Y-m-d', ( strtotime( $new_start_date ) + $time_difference ) ); // add difference between original start/end date to new start date to get new end date
 
 			// Has recurrence ended?

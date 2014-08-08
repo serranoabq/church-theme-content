@@ -7,7 +7,7 @@
  * @copyright  Copyright (c) 2013, churchthemes.com
  * @link       https://github.com/churchthemes/church-theme-content
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @since      0.9
+ * @since      0.9.1
  */
 
 // No direct access
@@ -111,10 +111,11 @@ function ctc_array_merge_after_key( $original_array, $insert_array, $after_key )
  *
  * @since 0.9
  * @param string $date Date to move into the future
- * @param string $increment 'weekly', 'monthly' or 'yearly'
+ * @param string $increment 'daily', 'weekly', 'monthly' or 'yearly'
+ * @param string $period 
  * @return string Future date
  */
-function ctc_increment_future_date( $date, $increment ) {
+function ctc_increment_future_date( $date, $increment, $period ) {
 
 	// In case no change could be made
 	$new_date = $date;
@@ -126,24 +127,34 @@ function ctc_increment_future_date( $date, $increment ) {
 		// Increment
 		switch ( $increment ) {
 
+			// Daily
+			case 'daily' :
+				// Add 1 day
+				list( $y, $m, $d ) = explode( '-', date( 'Y-m-d', strtotime( $date ) + $period * DAY_IN_SECONDS ) );
+				break;
+			
 			// Weekly
 			case 'weekly' :
 
 				// Add 7 days
-				list( $y, $m, $d ) = explode( '-', date( 'Y-m-d', strtotime( $date ) + WEEK_IN_SECONDS ) );
+				list( $y, $m, $d ) = explode( '-', date( 'Y-m-d', strtotime( $date ) + $period * WEEK_IN_SECONDS ) );
 
 				break;
 
 			// Monthly
 			case 'monthly' :
-
-				// Move forward one month
-				if ( $m < 12 ) { // same year
-					$m++; // add one month
-				} else { // next year (old month is December)
-					$m = 1; // first month of year
-					$y++; // add one year
+				$m += $period;
+				if($new_month > 12) {
+					$m = $m - 12;
+					$y++;
 				}
+				// Move forward one month
+				// if ( $m < 12 ) { // same year
+					// $m++; // add one month
+				// } else { // next year (old month is December)
+					// $m = 1; // first month of year
+					// $y++; // add one year
+				// }
 
 				break;
 
@@ -151,7 +162,7 @@ function ctc_increment_future_date( $date, $increment ) {
 			case 'yearly' :
 
 				// Move forward one year
-				$y++;
+				$y+=$period;
 
 				break;
 
@@ -171,13 +182,13 @@ function ctc_increment_future_date( $date, $increment ) {
 		$today_ts = strtotime( date_i18n( 'Y-m-d' ) ); // localized
 		$new_date_ts = strtotime( $new_date );
 		while ( $new_date_ts < $today_ts ) {
-			$new_date = ctc_increment_future_date( $new_date, $increment );
+			$new_date = ctc_increment_future_date( $new_date, $increment, $period);
 			$new_date_ts = strtotime( $new_date );
 		}
 
 	}
 
 	// Return filterable
-	return apply_filters( 'ctc_move_date_forward', $new_date, $date, $increment );
+	return apply_filters( 'ctc_move_date_forward', $new_date, $date, $increment, $period );
 
 }

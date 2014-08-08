@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2013, churchthemes.com
  * @link       https://github.com/churchthemes/church-theme-content
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @since      0.9
+ * @since      0.9.1
  */
 
 // No direct access
@@ -138,6 +138,7 @@ function ctc_add_meta_box_event_date() {
 				'checkbox_label'	=> '', //show text after checkbox
 				'options'			=> array( // array of keys/values for radio or select
 					'none'			=> _x( 'None', 'event meta box', 'church-theme-content' ),
+					'daily'			=> _x( 'Daily', 'event meta box', 'church-theme-content' ),
 					'weekly'	=> _x( 'Weekly', 'event meta box', 'church-theme-content' ),
 					'monthly'	=> _x( 'Monthly', 'event meta box', 'church-theme-content' ),
 					'yearly'	=> _x( 'Yearly', 'event meta box', 'church-theme-content' ),
@@ -156,6 +157,28 @@ function ctc_add_meta_box_event_date() {
 				'custom_field'		=> '', // function for custom display of field input
 			),
 
+			// Recurence Period
+			'_ctc_event_recurrence_period' => array(
+				'name'				=> __( 'Recurrence Period', 'church-theme-content' ),
+				'after_name'		=> '',
+				'desc'				=> _x( "Period of recurrence. It works with the Recurrence field to allow every N type recurrence. For example, choosing 'weekly' and seting this field to '2' makes the recurrence biweekly.", 'event meta box', 'church-theme-content' ),
+				'type'				=> 'number', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'			=> array(), // array of keys/values for radio or select
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'		=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'			=> '1', // value to pre-populate option with (before first save or on reset)
+				'no_empty'			=> true, // if user empties value, force default to be saved instead
+				'allow_html'		=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'		=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'				=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'	=> array(), // attr => value array for field container
+				'field_class'		=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'		=> '', // function for custom display of field input
+			),
+			
 			// Recur Until
 			'_ctc_event_recurrence_end_date' => array(
 				'name'				=> __( 'Recur Until', 'church-theme-content' ),
