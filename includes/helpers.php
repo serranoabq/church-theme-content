@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  * An easy way to get the URL of a file.
  *
- * @since 0.9
+ * @since 0.9.1
  * @param string $file File relative to theme root
  * @param string $directory Optional directory file is in, relative to theme root
  * @return string URL to file
@@ -143,19 +143,13 @@ function ctc_increment_future_date( $date, $increment, $period ) {
 
 			// Monthly
 			case 'monthly' :
+				// adding months can shift years, so account for that
 				$m += $period;
-				if($new_month > 12) {
-					$m = $m - 12;
-					$y++;
-				}
-				// Move forward one month
-				// if ( $m < 12 ) { // same year
-					// $m++; // add one month
-				// } else { // next year (old month is December)
-					// $m = 1; // first month of year
-					// $y++; // add one year
-				// }
-
+				
+				$n = floor(($m-1)/12);
+				$m -= 12*$n;
+				$y += $n;
+				
 				break;
 
 			// Yearly
