@@ -608,8 +608,6 @@ function ctc_event_columns_content( $column ) {
 			$recurrence = get_post_meta( $post->ID , '_ctc_event_recurrence' , true );
 			$recurrence_period = get_post_meta( $post->ID , '_ctc_event_recurrence_period' , true );
 			if ( ! empty( $recurrence ) && $recurrence != 'none' ) {
-				$recurrence_pattern = _n('Recurs '. ucfirst($recurrence), 'Recurs very %d '. 
-				( (int)$recurrence_period == 1 ? $recurrence : sprintf('Every %d %s', (int)$recurrence_period, ; 
 				
 				echo '<div class="description"><i>';
 				switch ( $recurrence ) {
@@ -617,10 +615,10 @@ function ctc_event_columns_content( $column ) {
 						printf(_n('Recurs Daily','Recurs Every %d Days',(int)$recurrence_period, 'church-theme-content'), (int)$recurrence_period);
 						break;
 					case 'weekly' :
-						printf(_n('Recurs Weekly','Recurs Every %d Week',(int)$recurrence_period, 'church-theme-content'), (int)$recurrence_period);
+						printf(_n('Recurs Weekly','Recurs Every %d Weeks',(int)$recurrence_period, 'church-theme-content'), (int)$recurrence_period);
 						break;
 					case 'monthly' :
-						printf(_n('Recurs Monthly','Recurs Every %d Month',(int)$recurrence_period, 'church-theme-content'), (int)$recurrence_period);
+						printf(_n('Recurs Monthly','Recurs Every %d Months',(int)$recurrence_period, 'church-theme-content'), (int)$recurrence_period);
 						break;
 					case 'yearly' :
 						printf(_n('Recurs Yearly','Recurs Every %d Years',(int)$recurrence_period, 'church-theme-content'), (int)$recurrence_period);
