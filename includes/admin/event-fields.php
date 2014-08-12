@@ -504,7 +504,8 @@ function ctc_correct_event_end_date( $post_id, $post ) {
 	// Get start and end dates already saved by CT Meta Box
 	$start_date = get_post_meta( $post_id, '_ctc_event_start_date', true );
 	$end_date = get_post_meta( $post_id, '_ctc_event_end_date', true );
-
+	$recurrence_period = get_post_meta( $post_id, '_ctc_event_recurrence_period', true );
+	
 	// If end date given but start date empty, make end date start date
 	if ( empty( $start_date ) && ! empty( $end_date ) ) {
 		$start_date = $end_date;
@@ -522,6 +523,10 @@ function ctc_correct_event_end_date( $post_id, $post ) {
 		$end_date = $start_date;
 	}
 
+	// If recurrence period is empty or negative, set to 1
+	if ( empty($recurrence_period) || 0 >= (int)$recurrence_period )
+		update_post_meta( $post_id, '_ctc_event_recurrence_period', '1' );
+		
 	// Update dates in case changed
 	update_post_meta( $post_id, '_ctc_event_start_date', $start_date );
 	update_post_meta( $post_id, '_ctc_event_end_date', $end_date );
@@ -608,7 +613,6 @@ function ctc_event_columns_content( $column ) {
 			$recurrence = get_post_meta( $post->ID , '_ctc_event_recurrence' , true );
 			$recurrence_period = get_post_meta( $post->ID , '_ctc_event_recurrence_period' , true );
 			if ( ! empty( $recurrence ) && $recurrence != 'none' ) {
-				
 				echo '<div class="description"><i>';
 				switch ( $recurrence ) {
 					case 'daily' :
