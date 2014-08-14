@@ -7,7 +7,7 @@
  * @copyright  Copyright (c) 2013, churchthemes.com
  * @link       https://github.com/churchthemes/church-theme-content
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @since      0.9.1
+ * @since      0.9.2
  */
 
 // No direct access
@@ -112,16 +112,19 @@ function ctc_array_merge_after_key( $original_array, $insert_array, $after_key )
  * @since 0.9
  * @param string $date Date to move into the future
  * @param string $increment 'daily', 'weekly', 'monthly' or 'yearly'
- * @param string $period 
+ * @param int $period Period of recurrence
+ * @param string $origin_date Original event date
  * @return string Future date
  */
-function ctc_increment_future_date( $date, $increment, $period ) {
+function ctc_increment_future_date( $date, $increment, $period, $origin_date ) {
 
 	// In case no change could be made
 	$new_date = $date;
 
 	// Get month, day and year, increment if date is valid
 	list( $y, $m, $d ) = explode( '-', $date );
+	list( $oy, $om, $od) = explode( '-', $origin_date );
+	
 	if ( checkdate( $m, $d, $y ) ) {
 
 		// Increment
@@ -129,14 +132,14 @@ function ctc_increment_future_date( $date, $increment, $period ) {
 
 			// Daily
 			case 'daily' :
-				// Add 1 day
+				// Add days
 				list( $y, $m, $d ) = explode( '-', date( 'Y-m-d', strtotime( $date ) + $period * DAY_IN_SECONDS ) );
 				break;
 			
 			// Weekly
 			case 'weekly' :
 
-				// Add 7 days
+				// Add weeks
 				list( $y, $m, $d ) = explode( '-', date( 'Y-m-d', strtotime( $date ) + $period * WEEK_IN_SECONDS ) );
 
 				break;
@@ -149,7 +152,11 @@ function ctc_increment_future_date( $date, $increment, $period ) {
 				$n = floor(($m-1)/12);
 				$m -= 12*$n;
 				$y += $n;
-				
+				// Fix: the event start day might have been shifted, so go by the 
+				// original start date. Note that this will affect end date as that 
+				// is relative to the original 
+				$d = $d != $od ? $od: $d;
+							
 				break;
 
 			// Yearly
@@ -161,14 +168,14 @@ function ctc_increment_future_date( $date, $increment, $period ) {
 				break;
 
 		}
-
+		
 		// Day does not exist in month
 		// Example: Make "November 31" into 30 or "February 29" into 28 (for non-leap year)
 		$days_in_month = date( 't', mktime( 0, 0, 0, $m, 1, $y ) );
 		if ( $d > $days_in_month ) {
 			$d = $days_in_month;
-		}
-
+		} 
+	
 		// Form the date string
 		$new_date = date( 'Y-m-d', mktime( 0, 0, 0, $m, $d, $y ) ); // pad day, month with 0
 
@@ -176,13 +183,13 @@ function ctc_increment_future_date( $date, $increment, $period ) {
 		$today_ts = strtotime( date_i18n( 'Y-m-d' ) ); // localized
 		$new_date_ts = strtotime( $new_date );
 		while ( $new_date_ts < $today_ts ) {
-			$new_date = ctc_increment_future_date( $new_date, $increment, $period);
+			$new_date = ctc_increment_future_date( $new_date, $increment, $period, $origin_date);
 			$new_date_ts = strtotime( $new_date );
 		}
 
 	}
 
 	// Return filterable
-	return apply_filters( 'ctc_move_date_forward', $new_date, $date, $increment, $period );
+	return apply_filters( 'ctc_move_date_forward', $new_date, $date, $increment, $period, $origin_date );
 
 }
