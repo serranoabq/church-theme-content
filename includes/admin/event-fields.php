@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2013, churchthemes.com
  * @link       https://github.com/churchthemes/church-theme-content
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @since      0.9.2
+ * @since      0.9.3
  */
 
 // No direct access
@@ -505,13 +505,15 @@ function ctc_correct_event_end_date( $post_id, $post ) {
 	$start_date = get_post_meta( $post_id, '_ctc_event_start_date', true );
 	$end_date = get_post_meta( $post_id, '_ctc_event_end_date', true );
 	$recurrence_period = get_post_meta( $post_id, '_ctc_event_recurrence_period', true );
-	
+	$origin_date = get_post_meta( $post_id, '_ctc_event_origin_date', true );
+	$origin_date = empty( $origin_date ) ? $start_date : $origin_date;
+			
 	// If end date given but start date empty, make end date start date
 	if ( empty( $start_date ) && ! empty( $end_date ) ) {
 		$start_date = $end_date;
 		$end_date = '';
 	}
-
+	
 	// If end date is empty or earlier than start date, use start date as end date
 	// Note: end date is required for proper ordering
 	if ( ! empty( $start_date )
@@ -530,6 +532,9 @@ function ctc_correct_event_end_date( $post_id, $post ) {
 	// Update dates in case changed
 	update_post_meta( $post_id, '_ctc_event_start_date', $start_date );
 	update_post_meta( $post_id, '_ctc_event_end_date', $end_date );
+	// Add the original start date of the event. This is necessary when doing the 
+	// scheduled shift for recurrence
+	update_post_meta( $post_id, '_ctc_event_origin_date', $origin_date );
 
 }
 add_action( 'save_post', 'ctc_correct_event_end_date', 11, 2 ); // after save at default 10
