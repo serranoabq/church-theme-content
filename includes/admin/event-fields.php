@@ -18,208 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**********************************
  * META BOXES
  **********************************/
-
-function ctc_event_start_date_metabox() {
-	$meta = array(
-		'name'				=> __( 'Start Date', 'church-theme-content' ),
-		'after_name'		=> __( '(Required)', 'church-theme-content' ), // (Optional), (Required), etc.
-		'desc'				=> '',
-		'type'				=> 'date', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
-		'checkbox_label'	=> '', //show text after checkbox
-		'options'			=> array(), // array of keys/values for radio or select
-		'upload_button'		=> '', // text for button that opens media frame
-		'upload_title'		=> '', // title appearing at top of media frame
-		'upload_type'		=> '', // optional type of media to filter by (image, audio, video, application/pdf)
-		'default'			=> '', // value to pre-populate option with (before first save or on reset)
-		'no_empty'			=> false, // if user empties value, force default to be saved instead
-		'allow_html'		=> false, // allow HTML to be used in the value (text, textarea)
-		'attributes'		=> array(), // attr => value array (e.g. set min/max for number type)
-		'class'				=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
-		'field_attributes'	=> array(), // attr => value array for field container
-		'field_class'		=> '', // class(es) to add to field container
-		'custom_sanitize'	=> '', // function to do additional sanitization
-		'custom_field'		=> '', // function for custom display of field input
-	);
-	return apply_filters( 'ctc_event_start_date_metabox', $meta);
-}
-
-function ctc_event_end_date_metabox() {
-	$meta = array(
-		'name'						=> __( 'End Date', 'church-theme-content' ),
-		'after_name'			=> '', // (Optional), (Required), etc.
-		'desc'						=> '',
-		'type'						=> 'date', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
-		'checkbox_label'	=> '', //show text after checkbox
-		'options'					=> array(), // array of keys/values for radio or select
-		'upload_button'		=> '', // text for button that opens media frame
-		'upload_title'		=> '', // title appearing at top of media frame
-		'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
-		'default'					=> '', // value to pre-populate option with (before first save or on reset)
-		'no_empty'				=> false, // if user empties value, force default to be saved instead
-		'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
-		'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
-		'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
-		'field_attributes'=> array(), // attr => value array for field container
-		'field_class'			=> '', // class(es) to add to field container
-		'custom_sanitize'	=> '', // function to do additional sanitization
-		'custom_field'		=> '', // function for custom display of field input
-	);
-	return apply_filters( 'ctc_event_end_date_metabox', $meta);
-}
-
-function ctc_event_time_metabox() {
-	$meta = array(
-		'name'						=> __( 'Time', 'church-theme-content' ),
-		'after_name'			=> '', // (Optional), (Required), etc.
-		'desc'						=> __( 'Optionally provide a time such as "8:00 am &ndash; 2:00 pm"', 'church-theme-content' ),
-		'type'						=> 'text', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
-		'checkbox_label'	=> '', //show text after checkbox
-		'options'					=> array(), // array of keys/values for radio or select
-		'upload_button'		=> '', // text for button that opens media frame
-		'upload_title'		=> '', // title appearing at top of media frame
-		'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
-		'default'					=> '', // value to pre-populate option with (before first save or on reset)
-		'no_empty'				=> false, // if user empties value, force default to be saved instead
-		'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
-		'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
-		'class'						=> 'ctmb-medium', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
-		'field_attributes'=> array(), // attr => value array for field container
-		'field_class'			=> '', // class(es) to add to field container
-		'custom_sanitize'	=> '', // function to do additional sanitization
-		'custom_field'		=> '', // function for custom display of field input
-	);
-	return apply_filters( 'ctc_event_time_metabox', $meta);
-}
-
-function ctc_event_recurrence_metabox() {
-	$meta = array(
-		'name'						=> __( 'Recurrence', 'church-theme-content' ),
-		'after_name'			=> '', // (Optional), (Required), etc.
-		'desc'						=> _x( "Start and end dates will automatically move forward after the event ends.", 'event meta box', 'church-theme-content' ),
-		'type'						=> 'select', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
-		'checkbox_label'	=> '', //show text after checkbox
-		'options'					=> array( // array of keys/values for radio or select
-			'none'					=> _x( 'None', 'event meta box', 'church-theme-content' ),
-			'daily'					=> _x( 'Daily', 'event meta box', 'church-theme-content' ),
-			'weekly'				=> _x( 'Weekly', 'event meta box', 'church-theme-content' ),
-			'monthly'				=> _x( 'Monthly', 'event meta box', 'church-theme-content' ),
-			'yearly'				=> _x( 'Yearly', 'event meta box', 'church-theme-content' ),
-		),
-		'upload_button'		=> '', // text for button that opens media frame
-		'upload_title'		=> '', // title appearing at top of media frame
-		'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
-		'default'					=> 'none', // value to pre-populate option with (before first save or on reset)
-		'no_empty'				=> true, // if user empties value, force default to be saved instead
-		'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
-		'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
-		'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
-		'field_attributes'=> array(), // attr => value array for field container
-		'field_class'			=> '', // class(es) to add to field container
-		'custom_sanitize'	=> '', // function to do additional sanitization
-		'custom_field'		=> '', // function for custom display of field input
-	);
-	return apply_filters( 'ctc_event_recurrence_metabox', $meta);
-}
-
-function ctc_event_recurrence_period_metabox() {
-	$meta = array(
-		'name'						=> __( 'Recurrence Period', 'church-theme-content' ),
-		'after_name'			=> '',
-		'desc'						=> _x( "Period of recurrence. It works with the Recurrence field to allow every N type recurrence. For example, choosing 'weekly' and setting this field to '2' makes the recurrence biweekly.", 'event meta box', 'church-theme-content' ),
-		'type'						=> 'number', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
-		'checkbox_label'	=> '', //show text after checkbox
-		'options'					=> array(), // array of keys/values for radio or select
-		'upload_button'		=> '', // text for button that opens media frame
-		'upload_title'		=> '', // title appearing at top of media frame
-		'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
-		'default'					=> '1', // value to pre-populate option with (before first save or on reset)
-		'no_empty'				=> true, // if user empties value, force default to be saved instead
-		'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
-		'attributes'			=> array(
-			'min' => '1',	
-			'max' => '12', 
-		), // attr => value array (e.g. set min/max for number type)
-		'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
-		'field_attributes'=> array(), // attr => value array for field container
-		'field_class'			=> '', // class(es) to add to field container
-		'custom_sanitize'	=> '', // function to do additional sanitization
-		'custom_field'		=> '', // function for custom display of field input
-	);
-	return apply_filters( 'ctc_event_recurrence_period_metabox', $meta);			
-}
-
-function ctc_event_recurrence_end_date_metabox() {
-	$meta = array(
-		'name'						=> __( 'Recur Until', 'church-theme-content' ),
-		'after_name'			=> '',
-		'desc'						=> '',
-		'type'						=> 'date', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
-		'checkbox_label'	=> '', //show text after checkbox
-		'options'					=> array(), // array of keys/values for radio or select
-		'upload_button'		=> '', // text for button that opens media frame
-		'upload_title'		=> '', // title appearing at top of media frame
-		'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
-		'default'					=> '', // value to pre-populate option with (before first save or on reset)
-		'no_empty'				=> false, // if user empties value, force default to be saved instead
-		'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
-		'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
-		'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
-		'field_attributes'=> array(), // attr => value array for field container
-		'field_class'			=> '', // class(es) to add to field container
-		'custom_sanitize'	=> '', // function to do additional sanitization
-		'custom_field'		=> '', // function for custom display of field input
-	);
-	return apply_filters( 'ctc_event_recurrence_end_date_metabox', $meta);			
-}
-
-function ctc_event_fields_metaboxes(){
-	$fields = array(
-		// Example
-		/*
-		'option_key' => array(
-			'name'				=> __( 'Field Name', 'church-theme-content' ),
-			'after_name'		=> '', // (Optional), (Required), etc.
-			'desc'				=> __( 'This is the description below the field.', 'church-theme-content' ),
-			'type'				=> 'text', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
-			'checkbox_label'	=> '', //show text after checkbox
-			'options'			=> array(), // array of keys/values for radio or select
-			'upload_button'		=> '', // text for button that opens media frame
-			'upload_title'		=> '', // title appearing at top of media frame
-			'upload_type'		=> '', // optional type of media to filter by (image, audio, video, application/pdf)
-			'default'			=> '', // value to pre-populate option with (before first save or on reset)
-			'no_empty'			=> false, // if user empties value, force default to be saved instead
-			'allow_html'		=> false, // allow HTML to be used in the value (text, textarea)
-			'attributes'		=> array(), // attr => value array (e.g. set min/max for number type)
-			'class'				=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
-			'field_attributes'	=> array(), // attr => value array for field container
-			'field_class'		=> '', // class(es) to add to field container
-			'custom_sanitize'	=> '', // function to do additional sanitization
-			'custom_field'=> '', // function for custom display of field input
-		*/
-
-		// Start Date
-		'_ctc_event_start_date' => ctc_event_start_date_metabox(),
-
-		// End Date
-		// Note: ctc_sanitize_event_end_date calback corrects end and start dates (ie. end date but no start or end is sooner than start)
-		'_ctc_event_end_date' => ctc_event_end_date_metabox(),
-
-		// Time
-		'_ctc_event_time' => ctc_event_time_metabox(),
-
-		// Recurrence
-		'_ctc_event_recurrence' => ctc_event_recurrence_metabox(),
-
-		// Recurence Period
-		'_ctc_event_recurrence_period' => ctc_event_recurrence_period_metabox(),
-		
-		// Recur Until
-		'_ctc_event_recurrence_end_date' => ctc_event_recurrence_end_date_metabox(),
-
-	);
-	return apply_filters( 'ctc_event_fields_metaboxes', $fields);			
-		
-}
 /**
  * Date & time
  *
@@ -238,7 +36,173 @@ function ctc_add_meta_box_event_date() {
 		'priority'	=> 'high', // high, core, default or low (see this: http://www.wproots.com/ultimate-guide-to-meta-boxes-in-wordpress/)
 
 		// Fields
-		'fields' => ctc_event_fields_metaboxes(),
+		'fields' => array(
+			// Example
+			/*
+			'option_key' => array(
+				'name'				=> __( 'Field Name', 'church-theme-content' ),
+				'after_name'		=> '', // (Optional), (Required), etc.
+				'desc'				=> __( 'This is the description below the field.', 'church-theme-content' ),
+				'type'				=> 'text', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'			=> array(), // array of keys/values for radio or select
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'		=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'			=> '', // value to pre-populate option with (before first save or on reset)
+				'no_empty'			=> false, // if user empties value, force default to be saved instead
+				'allow_html'		=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'		=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'				=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'	=> array(), // attr => value array for field container
+				'field_class'		=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'=> '', // function for custom display of field input
+			*/
+
+			// Start Date
+			'_ctc_event_start_date' => array(
+				'name'				=> __( 'Start Date', 'church-theme-content' ),
+				'after_name'		=> __( '(Required)', 'church-theme-content' ), // (Optional), (Required), etc.
+				'desc'				=> '',
+				'type'				=> 'date', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'			=> array(), // array of keys/values for radio or select
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'		=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'			=> '', // value to pre-populate option with (before first save or on reset)
+				'no_empty'			=> false, // if user empties value, force default to be saved instead
+				'allow_html'		=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'		=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'				=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'	=> array(), // attr => value array for field container
+				'field_class'		=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'		=> '', // function for custom display of field input
+			),
+
+			// End Date
+			// Note: ctc_sanitize_event_end_date calback corrects end and start dates (ie. end date but no start or end is sooner than start)
+			'_ctc_event_end_date' => array(
+				'name'						=> __( 'End Date', 'church-theme-content' ),
+				'after_name'			=> '', // (Optional), (Required), etc.
+				'desc'						=> '',
+				'type'						=> 'date', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'					=> array(), // array of keys/values for radio or select
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'					=> '', // value to pre-populate option with (before first save or on reset)
+				'no_empty'				=> false, // if user empties value, force default to be saved instead
+				'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'=> array(), // attr => value array for field container
+				'field_class'			=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'		=> '', // function for custom display of field input
+			),
+
+			// Time
+			'_ctc_event_time' => array(
+				'name'						=> __( 'Time', 'church-theme-content' ),
+				'after_name'			=> '', // (Optional), (Required), etc.
+				'desc'						=> __( 'Optionally provide a time such as "8:00 am &ndash; 2:00 pm"', 'church-theme-content' ),
+				'type'						=> 'text', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'					=> array(), // array of keys/values for radio or select
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'					=> '', // value to pre-populate option with (before first save or on reset)
+				'no_empty'				=> false, // if user empties value, force default to be saved instead
+				'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'						=> 'ctmb-medium', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'=> array(), // attr => value array for field container
+				'field_class'			=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'		=> '', // function for custom display of field input
+			),
+
+			// Recurrence
+			'_ctc_event_recurrence' => array(
+				'name'						=> __( 'Recurrence', 'church-theme-content' ),
+				'after_name'			=> '', // (Optional), (Required), etc.
+				'desc'						=> _x( "Start and end dates will automatically move forward after the event ends.", 'event meta box', 'church-theme-content' ),
+				'type'						=> 'select', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'					=> array( // array of keys/values for radio or select
+					'none'					=> _x( 'None', 'event meta box', 'church-theme-content' ),
+					'daily'					=> _x( 'Daily', 'event meta box', 'church-theme-content' ),
+					'weekly'				=> _x( 'Weekly', 'event meta box', 'church-theme-content' ),
+					'monthly'				=> _x( 'Monthly', 'event meta box', 'church-theme-content' ),
+					'yearly'				=> _x( 'Yearly', 'event meta box', 'church-theme-content' ),
+				),
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'					=> 'none', // value to pre-populate option with (before first save or on reset)
+				'no_empty'				=> true, // if user empties value, force default to be saved instead
+				'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'=> array(), // attr => value array for field container
+				'field_class'			=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'		=> '', // function for custom display of field input
+			),
+
+			// Recurence Period
+			'_ctc_event_recurrence_period' => array(
+				'name'						=> __( 'Recurrence Period', 'church-theme-content' ),
+				'after_name'			=> '',
+				'desc'						=> _x( "Period of recurrence. It works with the Recurrence field to allow every N type recurrence. For example, choosing 'weekly' and setting this field to '2' makes the recurrence biweekly.", 'event meta box', 'church-theme-content' ),
+				'type'						=> 'number', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'					=> array(), // array of keys/values for radio or select
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'					=> '1', // value to pre-populate option with (before first save or on reset)
+				'no_empty'				=> true, // if user empties value, force default to be saved instead
+				'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'			=> array(
+					'min' => '1',	
+					'max' => '12', 
+				), // attr => value array (e.g. set min/max for number type)
+				'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'=> array(), // attr => value array for field container
+				'field_class'			=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'		=> '', // function for custom display of field input
+			),
+			
+			// Recur Until
+			'_ctc_event_recurrence_end_date' => array(
+				'name'						=> __( 'Recur Until', 'church-theme-content' ),
+				'after_name'			=> '',
+				'desc'						=> '',
+				'type'						=> 'date', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'					=> array(), // array of keys/values for radio or select
+				'upload_button'		=> '', // text for button that opens media frame
+				'upload_title'		=> '', // title appearing at top of media frame
+				'upload_type'			=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'					=> '', // value to pre-populate option with (before first save or on reset)
+				'no_empty'				=> false, // if user empties value, force default to be saved instead
+				'allow_html'			=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'			=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'						=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'=> array(), // attr => value array for field container
+				'field_class'			=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'		=> '', // function for custom display of field input
+			)
+
+		)
 
 	);
 
