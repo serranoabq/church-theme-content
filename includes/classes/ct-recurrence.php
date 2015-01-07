@@ -134,7 +134,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 			if ( $args ) {
 
 				// Value is invalid
-				if ( empty( $args['frequency'] ) || ! in_array( $args['frequency'], array( 'weekly', 'monthly', 'yearly' ) ) ) {
+				if ( empty( $args['frequency'] ) || ! in_array( $args['frequency'], array( 'daily', 'weekly', 'monthly', 'yearly' ) ) ) {
 					$args = false;
 				}
 
@@ -249,6 +249,17 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 
 				// Calculate next recurrence
 				switch ( $args['frequency'] ) {
+
+					// Daily
+					case 'daily' :
+
+						// Add day(s)
+						// This will always be the same day of the week (Mon, Tue, etc.)
+						$DateTime = new DateTime( $args['start_date'] );
+						$DateTime->modify( '+' . $args['interval'] . ' days' );
+						list( $y, $m, $d ) = explode( '-', $DateTime->format( 'Y-m-d' ) );
+
+						break;
 
 					// Weekly
 					case 'weekly' :

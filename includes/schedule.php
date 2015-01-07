@@ -58,7 +58,7 @@ function ctc_update_recurring_event_dates() {
 		   ),
 			array(
 				'key' => '_ctc_event_recurrence',
-				'value' => array( 'weekly', 'monthly', 'yearly' ),
+				'value' => array( 'daily', 'weekly', 'monthly', 'yearly' ),
 		 		'compare' => 'IN',
 		   )
 		)
@@ -79,6 +79,7 @@ function ctc_update_recurring_event_dates() {
 
 		 	// Get recurrence
 		 	$recurrence = get_post_meta( $post->ID, '_ctc_event_recurrence', true );
+		 	$recurrence_period = get_post_meta( $post->ID, '_ctc_event_recurrence_period', true );
 			$recurrence_end_date = get_post_meta( $post->ID, '_ctc_event_recurrence_end_date', true );
 
 			// Difference between start and end date in seconds
@@ -87,7 +88,8 @@ function ctc_update_recurring_event_dates() {
 			// Get soonest occurence that is today or later
 			$args = array(
 				'start_date'			=> $start_date, // first day of event, YYYY-mm-dd (ie. 2015-07-20 for July 15, 2015)
-				'frequency'				=> $recurrence, // weekly, monthly, yearly
+				'frequency'				=> $recurrence, // daily, weekly, monthly, yearly
+				'interval'				=> $recurrence_period,
 			);
 			$args = apply_filters( 'ctc_event_recurrence_args', $args, $post ); // Custom Recurring Events add-on uses this
 			$new_start_date = $ctc_recurrence->calc_next_future_date( $args );

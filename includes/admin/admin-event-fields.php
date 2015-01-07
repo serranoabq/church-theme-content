@@ -229,6 +229,7 @@ function ctc_add_meta_box_event_date() {
 				'checkbox_label'	=> '', //show text after checkbox
 				'options'			=> array( // array of keys/values for radio or select
 					'none'			=> _x( 'None', 'event meta box', 'church-theme-content' ),
+					'daily'	=> _x( 'Daily', 'event meta box', 'church-theme-content' ),
 					'weekly'	=> _x( 'Weekly', 'event meta box', 'church-theme-content' ),
 					'monthly'	=> _x( 'Monthly', 'event meta box', 'church-theme-content' ),
 					'yearly'	=> _x( 'Yearly', 'event meta box', 'church-theme-content' ),
@@ -247,7 +248,33 @@ function ctc_add_meta_box_event_date() {
 				'custom_field'		=> '', // function for custom display of field input
 				'visibility' 		=> array(), // show/hide based on other fields' values: array( array( 'field1' => 'value' ), array( 'field2' => array( 'value', '!=' ) )
 			),
-
+			
+			// Recurence Period
+			'_ctc_event_recurrence_period' => array(
+				'name'	=> __( 'Recurrence Period', 'church-theme-content' ),
+				'after_name'	=> '',
+				'desc'	=> _x( "Period of recurrence. It works with the Recurrence field to allow every N type recurrence. For example, choosing 'weekly' and setting this field to '2' makes the recurrence biweekly.", 'event meta box', 'church-theme-content' ),
+				'type'	=> 'select', // text, textarea, checkbox, radio, select, number, upload, upload_textarea, url
+				'checkbox_label'	=> '', //show text after checkbox
+				'options'	=> array_combine( range(1,12), range(1,12) ) ,
+				//array(), // array of keys/values for radio or select
+				'upload_button'	=> '', // text for button that opens media frame
+				'upload_title'	=> '', // title appearing at top of media frame
+				'upload_type'	=> '', // optional type of media to filter by (image, audio, video, application/pdf)
+				'default'	=> '1', // value to pre-populate option with (before first save or on reset)
+				'no_empty'	=> true, // if user empties value, force default to be saved instead
+				'allow_html'	=> false, // allow HTML to be used in the value (text, textarea)
+				'attributes'	=> array(), // attr => value array (e.g. set min/max for number type)
+				'class'	=> '', // class(es) to add to input (try try ctmb-medium, ctmb-small, ctmb-tiny)
+				'field_attributes'=> array(), // attr => value array for field container
+				'field_class'	=> '', // class(es) to add to field container
+				'custom_sanitize'	=> '', // function to do additional sanitization
+				'custom_field'	=> '', // function for custom display of field input
+				'visibility' 		=> array( // show this field only when other field(s) have certain values: array( array( 'field1' => 'value' ), array( 'field2' => array( 'value', '!=' ) )
+					'_ctc_event_recurrence' => array( 'none', '!=' ),
+				)
+			),
+			
 			// Recur Until
 			'_ctc_event_recurrence_end_date' => array(
 				'name'				=> __( 'Recur Until', 'church-theme-content' ),
@@ -595,7 +622,7 @@ function ctc_correct_event_end_date( $post_id, $post ) {
 	) {
 		$end_date = $start_date;
 	}
-
+	
 	// Update dates in case changed
 	update_post_meta( $post_id, '_ctc_event_start_date', $start_date );
 	update_post_meta( $post_id, '_ctc_event_end_date', $end_date );
@@ -719,6 +746,7 @@ function ctc_event_columns_content( $column ) {
 			$hide_time_range = get_post_meta( $post->ID , '_ctc_event_hide_time_range' , true );
 			$recurrence = get_post_meta( $post->ID , '_ctc_event_recurrence' , true );
 			$recurrence_end_date = get_post_meta( $post->ID , '_ctc_event_recurrence_end_date' , true );
+			$recurrence_period = get_post_meta( $post->ID , '_ctc_event_recurrence_period' , true );
 
 			$dates = array();
 
@@ -776,54 +804,56 @@ function ctc_event_columns_content( $column ) {
 				// Frequency
 				switch ( $recurrence ) {
 
+					case 'daily' :
+						
+						$recurrence_term = sprintf( 
+							_n( 'day','%d days', (int)$recurrence_period, 'church-theme-content' ), 
+							(int)$recurrence_period 
+						);
+						
+						$recurrence_note = 'Every ' . $recurrence_term;
+						
+						break;
+						
 					case 'weekly' :
-
-						if ( $recurrence_end_date ) {
-
-							/* translators: %1$s is recurrence end date */
-							$recurrence_note = sprintf(
-								__( 'Every week until %1$s', 'church-theme-content' ),
-								$recurrence_end_date_localized
-							);
-
-						} else {
-							$recurrence_note = __( 'Every week', 'church-theme-content' );
-						}
-
+						
+						$recurrence_term = sprintf( 
+							_n( 'week', '%d weeks', (int)$recurrence_period, 'church-theme-content' ), 
+							(int)$recurrence_period 
+						);
+						
 						break;
 
 					case 'monthly' :
 
-						if ( $recurrence_end_date ) {
-
-							/* translators: %1$s is recurrence end date */
-							$recurrence_note = sprintf(
-								__( 'Every month until %1$s', 'church-theme-content' ),
-								$recurrence_end_date_localized
-							);
-
-						} else {
-							$recurrence_note = __( 'Every month', 'church-theme-content' );
-						}
-
+						$recurrence_term = sprintf( 
+							_n( 'month','%d months', (int)$recurrence_period, 'church-theme-content' ), 
+							(int)$recurrence_period 
+						);
+						
 						break;
 
 					case 'yearly' :
 
-						if ( $recurrence_end_date ) {
-
-							/* translators: %1$s is recurrence end date */
-							$recurrence_note = sprintf(
-								__( 'Every year until %1$s', 'church-theme-content' ),
-								$recurrence_end_date_localized
-							);
-
-						} else {
-							$recurrence_note = __( 'Every year', 'church-theme-content' );
-						}
-
+						$recurrence_term = sprintf( 
+							_n( 'year','%d years', (int)$recurrence_period, 'church-theme-content' ), 
+							(int)$recurrence_period 
+						);
+						
 						break;
 
+				}
+				
+				$recurrence_note = 'Every ' . $recurrence_term;
+						
+				if ( $recurrence_end_date ) {
+
+					/* translators: %1$s is recurrence end date */
+					$recurrence_note = $recurrence_note . sprintf( 
+						__( ' until %1$s', 'church-theme-content' ), 
+						$recurrence_end_date_localized 
+					);
+					
 				}
 
 				echo apply_filters( 'ctc_event_columns_recurrence_note', $recurrence_note, array(
